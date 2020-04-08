@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLASK-CHAT-APP</title>
+
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+
+<script type='text/javascript'>
+$(document).ready(function() {
+    const socket = io.connect('http://127.0.0.1:5000');
+    socket.on('connect', function(){
+        socket.send('유저 접속')
+    });
+    socket.on('message', function(msg){
+        let currentDate = new Date();
+        let Houes = currentDate.getHours()
+        let Minute = currentDate.getMinutes()
+        let Seconds = currentDate.getSeconds()
+        if(Houes < 10){
+            House = `0${House}`
+        }
+        if(Minute < 10){
+            Minute = `0${Minute}`
+        }
+        if(Seconds < 10){
+            Seconds = `0${Seconds}`
+        }
+        let time = `[${Houes}:${Minute}:${Seconds}]`
+        if($('#anonymous').val()){
+            $("#messages").append(`<li> ${$('#anonymous').val()} : ${msg} ${time}</li>`);
+        }else{
+            $("#messages").append(`<li> 익명 ${msg} ${time}</li>`);
+        }
+        //console.log('Received message');
+    });
+    $('#sendbutton').on('click', function(){
+        socket.send($('#myMessage').val());
+        $('#myMessage').val('');
+        //console.log('send message');
+    });
+});
+
+</script>
+<ul id='messages'></ul>
+<input type="text" id='anonymous' placeholder="익명 아이디 입력">
+<input type="text" id='myMessage'>
+<button id='sendbutton'>입력</button>
+</body>
+</html>
