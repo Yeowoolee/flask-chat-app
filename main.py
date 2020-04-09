@@ -7,7 +7,7 @@ from flask_pymongo import PyMongo
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ['APP_KEY']
 app.config['MONGO_URI'] = os.environ['MONGO_KEY']
-socketio = SocketIO(app)
+socketio = SocketIO(app, message_queue='redis://')
 mongo = PyMongo(app)
 history = mongo.db.MSG_History
 @app.route('/')
@@ -27,4 +27,3 @@ def handleMessage(msg):
 
 if __name__ == '__main__':
     socketio.run(app)
-    
