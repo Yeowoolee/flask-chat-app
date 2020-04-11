@@ -33,7 +33,7 @@
 
 <script type='text/javascript'>
     $(document).ready(function() {
-        const socket = io.connect('http://127.0.0.1:5000');
+        const socket = io();
         socket.on('connect', function(){
             socket.send('유저 접속')
         });
