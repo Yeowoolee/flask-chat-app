@@ -18,7 +18,11 @@
     <div class="card-body">
       <ul id='messages'>
         {% for msg in messages %}
-            <li>{{msg.name}} {{msg.text}} [{{msg.get_time}}]</li>
+            
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>{{msg.name}}</strong> {{msg.text}}
+                <span class="badge badge-primary">[{{msg.get_time}}]</span>
+            </li>
         {% endfor %}
     </ul>
     </div>
@@ -38,8 +42,16 @@
             socket.send('유저 접속')
         });
         socket.on('message', function(msg){
-            $("#messages").append(`<li>${msg}</li>`);
-           
+            let getString = msg.split(' ');
+            $("#messages").append(`<li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>${getString[0]}</strong> ${getString[1]}
+                <span class="badge badge-primary">${getString[2]} ${getString[3]}</span>
+            </li>`);
+            
+            $(".example-1").animate({
+	            scrollTop: 10000
+            }, 500);
+
         });
         $('#sendbutton').on('click', function(){
             let send_Python = ''
