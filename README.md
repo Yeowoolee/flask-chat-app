@@ -1,5 +1,5 @@
 # flask-chat-app
-heroku : https://flask-chat-socketio.herokuapp.com/
+배포된 페이지: https://flask-chat-socketio.herokuapp.com/
 
 > Goal
 
